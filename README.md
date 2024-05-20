@@ -7,10 +7,11 @@ This repo contains:
 1. `scrape_guardian.py`       -- A python script to scrape and collect cryptic and quick cryptic crossword clues and answers from The Guardian.
 2. `cryptics_finetune.ipynb`  -- A notebook that was used to train T5-small to solve cryptic crosswords.
 3. `cryptics_tester.ipynb`    -- A notebook used for testing the fine-tuned models.
-4. `Data/cryptic_full.json`   -- A json file that contains 169,993 cryptic crossword clues and answers from The Guardian.
-5. `Data/quiptic_full.json`   -- A json file that contains 36,274 quick cryptic crossword clues and answers from The Guardian.
-6. `Data/Primer.pdf`          -- A primer on cryptic crosswords that I wrote, which is useful for beginners.
-7. `Data/*.svg`               -- Plots of evolution of training metrics saved from tensorboard. 
+4. `few_shot_chatgpt.ipynb`   -- A notebook that tests ChatGPT 3.5 turbo on cryptic crosswords with few-shot learning.
+5. `Data/cryptic_full.json`   -- A json file that contains 169,993 cryptic crossword clues and answers from The Guardian.
+6. `Data/quiptic_full.json`   -- A json file that contains 36,274 quick cryptic crossword clues and answers from The Guardian.
+7. `Data/Primer.pdf`          -- A primer on cryptic crosswords that I wrote, which is useful for beginners.
+8. `Data/*.svg`               -- Plots of evolution of training metrics saved from tensorboard. 
    
 ## Background:
 
@@ -37,11 +38,14 @@ Both `cryptics_finetune.ipynb` and `cryptics_tester.ipynb` were both run on Goog
 
 I gave the model some help in finding the answer in the testing phase, by generating a few possible answers and picking the most probable answer that fits the number of letters. This helped a bit with accuracy, as the model does not always get the right number of letters (although it seems to consistently be in the ball park!). However, this made the testing process significantly slower, and you can turn off this feature by setting `num_beams=1` in the generation config in the notebook.
 
+The notebook `few_shot_chatgpt.ipynb` uses ChatGPT API calls to test the model on crosswords from the same cryptics dataset. Few-shot learning was done with the same 25 solved examples (randomly chosen from the training set) given as context for each test. A total of 500 test examples were used, which were sampled from the cryptics test dataset.
+
 ## Results
 
 Two models were trained on cryptics and quiptics respectively. The quiptic dataset is much smaller, but has "easier" clues. The cryptic dataset is much bigger, and has moderately difficult clues.
 1. The quiptic model achieved an accuracy of __just 6%__ on the quiptic test set. I did not bother with testing it on the cryptics dataset.
 2. The cryptic model achieved an accuracy of __18.4%__ on the cryptics test set and __13.7%__ on the quiptics test set. Training on more crossword clues clearly makes the model better at solving them.
+3. For comparison, few-shot learning with ChatGPT 3.5 turbo (a much bigger model) produced __10%__ accuracy. 
 
 Notably, the cryptic model, which is better at solving crosswords overall, did worse on the easier quiptic crosswords. This makes sense as it was trained on a different distribution than the test distribution, but it is interesting that it struggled more with clues that are meant to be easier for humans.
 
