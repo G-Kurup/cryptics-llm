@@ -1,7 +1,7 @@
 ############################################################################################################
 #                                                                                                          #
 #        Run script with command line args:                                                                #
-#        python3 Scrape_Guardian.py latest_crossword_number:int /path/to/output/directory:str              #
+#        python3 scrape_guardian.py crossword_no:int /path/to/output/directory:str                         #
 #                                                                                                          #
 ############################################################################################################
 
