@@ -18,9 +18,12 @@ Cryptic crosswords are crossword puzzles that combine elements of normal/definit
 
 \* with some exceptions, such as _cryptic definitions_, _double definitions_ and _&lits_.
 
-Because of the wordplay elements involved, they are quite challenging to solve even for humans. Large Language Models struggle quite a bit to grasp the concept, especially since a well constructed clue gives no indication of which part of the clue is wordplay and which part is definitional. The surface reading can point to a completely irrelevant answer as well. Solving a clue involves multiple steps of manipulating letters ('anno' or annotation in the crossword community) and comparing definitions with words in the clue, which is difficult for a model trained to predict the next token given a sequence. Even worse, LLMs I have tested often do not adhere to the number of letters requirement in the clue ('enum' as it is usually called), and give answers with the wrong number of letters. This is not surprising, since LLMs are usually trained on tokens and not characters. I have not yet tested if a model like ByT5 will perform better in this task.
+An example of a cryptic crossword clue and answer:   _Bird is cowardly, about to fly away. (5)_   
+The answer is RAVEN, which means “bird”, and is = CRAVEN (“cowardly”) - C (the abbreviation for circa or “about”).
 
-P.S. - There are some other cryptic crossword datasets available online, which probbaly have some intersection with the dataset that I made. See [George Ho's dataset](https://cryptics.georgeho.org/) and [cryptonite](https://huggingface.co/datasets/cryptonite), for example.
+Because of the complicated wordplay elements involved, they are quite challenging to solve even for humans. Large Language Models struggle quite a bit to grasp the concept, especially since a well constructed clue gives no indication of which part of the clue is wordplay and which part is definitional. The surface reading can point to a completely irrelevant answer as well. Solving a clue involves multiple steps of manipulating letters ('anno' or annotation in the crossword community) and comparing definitions with words in the clue, which is difficult for a model trained to predict the next token given a sequence. Even worse, LLMs I have tested often do not adhere to the number of letters requirement in the clue ('enum' as it is usually called), and give answers with the wrong number of letters. This is not surprising, since LLMs are usually trained on tokens and not characters. I have not yet tested if a model like ByT5 will perform better in this task.
+
+P.S. - There are a couple of other cryptic crossword datasets available online, which probably have some intersection with the dataset that I made. See [George Ho's dataset](https://cryptics.georgeho.org/) and [cryptonite](https://huggingface.co/datasets/cryptonite).
   
 ## Details
 
@@ -36,11 +39,11 @@ I gave the model some help in finding the answer in the testing phase, by genera
 
 ## Results
 
-Two models were trained on cryptics and quiptics respectively. The quiptic dataset is much smaller, but has easier clues. The cryptic dataset is much bigger, and has moderately difficult clues.
+Two models were trained on cryptics and quiptics respectively. The quiptic dataset is much smaller, but has "easier" clues. The cryptic dataset is much bigger, and has moderately difficult clues.
 1. The quiptic model achieved an accuracy of __just 6%__ on the quiptic test set. I did not bother with testing it on the cryptics dataset.
 2. The cryptic model achieved an accuracy of __18.4%__ on the cryptics test set and __13.7%__ on the quiptics test set. Training on more crossword clues clearly makes the model better at solving them.
 
-Notably, the cryptic model which is better at solving crosswords overall did worse on the easier quiptic crosswords. This makes sense as it was trained on a different distribution than the test distribution, but it is interesting that it struggled more with clues that are meant to be easier for humans.
+Notably, the cryptic model, which is better at solving crosswords overall, did worse on the easier quiptic crosswords. This makes sense as it was trained on a different distribution than the test distribution, but it is interesting that it struggled more with clues that are meant to be easier for humans.
 
 ## Training Plots:
 
